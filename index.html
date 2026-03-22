@@ -1,42 +1,4 @@
-Skip to content
-aeries31
-checklist
-Repository navigation
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Commit 1f228a1
-aeries31
-aeries31
-authored
-2 days ago
-·
-·
-Verified
-Add files via upload
-main
-0 parents  commit 
-1f228a1
-File tree
-Filter files…
-index.html
-1 file changed
-+1036
--0
-lines changed
-Search within code
- 
-‎index.html‎
-+1,036
-Lines changed: 1036 additions & 0 deletions
-Original file line number	Diff line number	Diff line change
-@@ -0,0 +1,1036 @@
+
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -478,6 +440,7 @@ const $ = sel => document.querySelector(sel);
 const qsa = (sel,root=document) => [...root.querySelectorAll(sel)];
 const clone = obj => JSON.parse(JSON.stringify(obj));
 const uid = ()=>'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
 const el = {
   showSelect:$('#show-select'),showNameInp:$('#show-name-inp'),showNameDisp:$('#show-name-disp'),
   opct:$('#opct'),obar:$('#obar'),ocount:$('#ocount'),saveBtn:$('#save-btn'),
@@ -486,12 +449,15 @@ const el = {
   categories:$('#categories'),addTabInp:$('#add-tab-inp'),addCatInp:$('#add-cat-inp'),
   jsonFile:$('#json-file'),modal:$('#modal'),modalInp:$('#modal-inp')
 };
+
 let appState = null, editMode = 'none', filterMode='all', saveTimer=null, undoStack=[], inputUndoTimers={};
+
 function schedulePersist(){ clearTimeout(saveTimer); saveTimer=setTimeout(persistState,120); }
 function pushUndoState(){ try{ undoStack.push(clone(appState)); if(undoStack.length>80) undoStack.shift(); }catch(e){} updateUndoButton(); }
 function updateUndoButton(){ el.undoBtn.disabled = undoStack.length===0; }
 function undoLastAction(){ if(!undoStack.length) return; appState = undoStack.pop(); ensureShape(); refreshTop(); renderShow(); persistState(); updateUndoButton(); }
 function queueInputUndo(key){ clearTimeout(inputUndoTimers[key]); if(!inputUndoTimers[key]) pushUndoState(); inputUndoTimers[key]=setTimeout(()=>delete inputUndoTimers[key],600); }
+
 function defaultShowState(){
   return {
     checked:{}, collapsed:{}, meta:{}, subData:{}, activeTab:'pre', activeCategoryByTab:{},
@@ -1017,6 +983,7 @@ function wireEvents(){
   el.modal.addEventListener('click', e=>{ if(e.target===el.modal) closeModal(); });
   el.modalInp.addEventListener('keydown', e=>{ if(e.key==='Enter') confirmModal(); if(e.key==='Escape') closeModal(); });
   document.addEventListener('keydown', e=>{ if(e.key==='Escape' && el.modal.classList.contains('open')) closeModal(); if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='z' && !el.modal.classList.contains('open')){ e.preventDefault(); undoLastAction(); } });
+
   el.phaseTabs.addEventListener('click', e=>{
     const btn=e.target.closest('.phase-tab'); if(btn){ getShowData().activeTab=btn.dataset.tab; renderShow(); schedulePersist(); return; }
     const mv=e.target.closest('[data-role="move-tab"]'); if(mv){ e.stopPropagation(); moveTab(mv.dataset.tab, Number(mv.dataset.dir)); return; }
@@ -1024,6 +991,7 @@ function wireEvents(){
   });
   el.phaseTabs.addEventListener('input', e=>{ const inp=e.target.closest('[data-role="tab-title"]'); if(inp) renameTab(inp.dataset.tab, inp.value); });
   el.categoryTabs.addEventListener('click', e=>{ const btn=e.target.closest('.category-tab'); if(!btn) return; const tab=getActiveTab(); getShowData().activeCategoryByTab[tab.id]=btn.dataset.category; renderShow(); schedulePersist(); });
+
   el.categories.addEventListener('click', e=>{
     const delCat=e.target.closest('[data-role="delete-category"]'); if(delCat){ e.stopPropagation(); removeCategory(delCat.dataset.sec); return; }
     const completeBtn=e.target.closest('[data-role="toggle-category-complete"]'); if(completeBtn){ e.stopPropagation(); toggleCategoryComplete(completeBtn.dataset.sec); return; }
@@ -1065,12 +1033,5 @@ function boot(){
 boot();
 })();
 </script>
-</body></html>
-0 commit comments
-Comments
-0
- (0)
-Comment
-You're not receiving notifications from this thread.
 
-There are no files selected for viewing
+</body></html>
